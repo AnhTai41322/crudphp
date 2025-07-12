@@ -1,9 +1,3 @@
-Dưới đây là phiên bản đơn giản và ngắn gọn hơn của phần `README.md`:
-
----
-
-# Laravel AJAX CRUD (Modal)
-
 ## Cài đặt nhanh
 
 ```bash
