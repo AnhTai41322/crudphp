@@ -1,9 +1,32 @@
-## Installation
-  git clone https://github.com/sreejithbs/Laravel-AJAX-CRUD-Modal.git
-  cd crudphp
- Open Project in a Code Editor, rename `.env.example` to `.env` and modify DB name, username, password to your environment.
-  composer install
-  php artisan key:generate
-  php artisan migrate
-  php artisan serve
-  http://localhost:8000/product
+Dưới đây là phiên bản đơn giản và ngắn gọn hơn của phần `README.md`:
+
+---
+
+# Laravel AJAX CRUD (Modal)
+
+## Cài đặt nhanh
+
+```bash
+git clone https://github.com/AnhTai41322/crudphp.git
+cd Laravel-AJAX-CRUD-Modal
+```
+
+## Cấu hình
+
+* Mở thư mục bằng trình soạn thảo mã nguồn
+* Đổi tên file `.env.example` thành `.env`
+* Cập nhật thông tin database trong file `.env`
+
+## Chạy dự án
+
+```bash
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+Truy cập: [http://localhost:8000/product](http://localhost:8000/product)
+
+---
+
