@@ -1,0 +1,50 @@
+{
+  "name": "laravel-ajax-crud-modal",
+  "description": "Laravel AJAX CRUD Modal Application",
+  "repository": "https://github.com/yourusername/laravel-ajax-crud-modal",
+  "logo": "https://laravel.com/img/logomark.min.svg",
+  "keywords": ["laravel", "php", "ajax", "crud"],
+  "env": {
+    "APP_ENV": {
+      "description": "Application environment",
+      "value": "production"
+    },
+    "APP_DEBUG": {
+      "description": "Application debug mode",
+      "value": "false"
+    },
+    "APP_KEY": {
+      "description": "Application key",
+      "generator": "secret"
+    },
+    "DB_CONNECTION": {
+      "description": "Database connection",
+      "value": "mysql"
+    },
+    "CACHE_DRIVER": {
+      "description": "Cache driver",
+      "value": "file"
+    },
+    "SESSION_DRIVER": {
+      "description": "Session driver",
+      "value": "file"
+    },
+    "QUEUE_DRIVER": {
+      "description": "Queue driver",
+      "value": "sync"
+    }
+  },
+  "addons": [
+    {
+      "plan": "heroku-mysql:mini"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    }
+  ],
+  "scripts": {
+    "postdeploy": "php artisan migrate --force"
+  }
+} 

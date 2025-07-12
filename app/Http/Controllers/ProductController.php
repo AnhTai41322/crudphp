@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 class ProductController extends Controller
 {
     /**
@@ -12,11 +13,104 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): View
     {
-        $products = Product::all();
-        return view('index')->with('products', $products);
+        $search = $request->get('search');
+        $sortBy = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('sort_order', 'asc');
+        
+        // Validate sort parameters
+        $allowedSortFields = ['id', 'name', 'price', 'created_at'];
+        $allowedSortOrders = ['asc', 'desc'];
+        
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'id';
+        }
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'asc';
+        }
+        
+        $products = DB::table('products')
+                     ->when($search, function($query) use ($search) {
+                         return $query->where('name', 'LIKE', '%' . $search . '%')
+                                     ->orWhere('price', 'LIKE', '%' . $search . '%');
+                     })
+                     ->where('id', '>', 0)
+                     ->orderBy($sortBy, $sortOrder)
+                     ->paginate(10);
+        
+        return view('index')->with([
+            'products' => $products,
+            'currentSortBy' => $sortBy,
+            'currentSortOrder' => $sortOrder
+        ]);
     }
+
+    /**
+     * Search products via AJAX
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $sortBy = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('sort_order', 'asc');
+        
+        // Validate sort parameters
+        $allowedSortFields = ['id', 'name', 'price', 'created_at'];
+        $allowedSortOrders = ['asc', 'desc'];
+        
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'id';
+        }
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'asc';
+        }
+        
+        $products = DB::table('products')
+                     ->when($search, function($query) use ($search) {
+                         return $query->where('name', 'LIKE', '%' . $search . '%')
+                                     ->orWhere('price', 'LIKE', '%' . $search . '%');
+                     })
+                     ->where('id', '>', 0)
+                     ->orderBy($sortBy, $sortOrder)
+                     ->get();
+                     
+        return response()->json($products);
+    }
+
+    /**
+     * Sort products via AJAX
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function sort(Request $request)
+    {
+        $sortBy = $request->get('sort_by', 'id');
+        $sortOrder = $request->get('sort_order', 'asc');
+        
+        // Validate sort parameters
+        $allowedSortFields = ['id', 'name', 'price', 'created_at'];
+        $allowedSortOrders = ['asc', 'desc'];
+        
+        if (!in_array($sortBy, $allowedSortFields)) {
+            $sortBy = 'id';
+        }
+        if (!in_array($sortOrder, $allowedSortOrders)) {
+            $sortOrder = 'asc';
+        }
+        
+        $products = DB::table('products')
+                     ->where('id', '>', 0)
+                     ->orderBy($sortBy, $sortOrder)
+                     ->get();
+                     
+        return response()->json($products);
+    }
+
 
     /**
      * Store a newly created resource in storage.

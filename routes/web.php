@@ -14,18 +14,18 @@
 //Display Index Page
 Route::get('/product', 'ProductController@index');
 
+//Display Page
+Route::get('product/{page?}', 'ProductController@index');
 
 // Populate Data in Edit Modal Form
 Route::get('product/{product_id?}', 'ProductController@show');
 
-
 //create New Product
 Route::post('product', 'ProductController@store');
-
 
 // update Existing Product
 Route::put('product/{product_id}', 'ProductController@update');
 
-
 // delete product
 Route::delete('product/{product_id}', 'ProductController@destroy');
+

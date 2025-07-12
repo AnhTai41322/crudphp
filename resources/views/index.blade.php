@@ -29,7 +29,18 @@
                     </div>
                 </div>
             </div>
-            
+                <input id="url" type="hidden" >
+            <div class="text-center mb-3">
+                <form method="GET" action="{{ url()->current() }}" class="form-inline" style="display: inline-block;">
+                    <div class="form-group">
+                        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="{{ request('search') }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Tìm</button>
+
+                </form>
+            </div>
+                <div> ­</div>
+
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <table class="table table-striped table-hover ">
@@ -42,25 +53,29 @@
                             </tr>
                         </thead>
                         <tbody id="products-list" name="products-list">
-                            @foreach ($products as $product)
-                              <tr id="product{{$product->id}}" class="active">
-                                  <td>{{$product->id}}</td>
-                                  <td>{{$product->name}}</td>
-                                  <td>{{$product->price}}</td>
-                                  <td width="35%">
-                                      <button class="btn btn-warning btn-detail open_modal" value="{{$product->id}}">Edit</button>
-                                      <button class="btn btn-danger btn-delete delete-product" value="{{$product->id}}">Delete</button>
-                                  </td>
-                              </tr>
-                            @endforeach
-                        </tbody>
+                              @foreach ($products as $product)
+                                <tr id="product{{$product->id}}" class="active">
+                                    <td>{{$product->id}}</td>
+                                    <td>{{$product->name}}</td>
+                                    <td>{{$product->price}}</td>
+                                    <td width="35%">
+                                        <button class="btn btn-warning btn-detail open_modal" value="{{$product->id}}">Edit</button>
+                                        <button class="btn btn-danger btn-delete delete-product" value="{{$product->id}}">Delete</button>
+                                    </td>
+                                </tr>
+                              @endforeach
+                          </tbody>
+                          </table>
+                          <div class="text-center">
+                              {{ $products->links() }}
+                          </div>
+
                     </table> 
                 </div>
             </div>
         </div>
 
         <!-- Passing BASE URL  -->
-        <input id="url" type="hidden" value="{{ \Request::url() }}">
 
         <!-- MODAL SECTION -->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
